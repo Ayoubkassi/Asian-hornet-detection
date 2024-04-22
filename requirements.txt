@@ -1,0 +1,6 @@
+Flask
+Werkzeug
+requests
+Pillow
+h5py
+tensorflow==2.16.1

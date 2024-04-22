@@ -1,6 +1,6 @@
 
 import os
-from flask import Flask, request, redirect, url_for, render_template
+from flask import Flask, request, redirect, url_for, render_template, send_from_directory
 from werkzeug.utils import secure_filename
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
@@ -16,7 +16,7 @@ def download_file_from_url(url, destination):
 app = Flask(__name__)
 
 # Load the trained model
-model_url 'https://drive.google.com/file/d/1TdpLpCIFY4m0vS7eIlETj6occA6CbZWg/view?usp=sharing'
+model_url = 'https://drive.google.com/uc?export=download&id=1TdpLpCIFY4m0vS7eIlETj6occA6CbZWg'
 
 destination_path = 'model.h5'
 
@@ -50,6 +50,10 @@ def upload_file():
             file.save(filepath)
             return redirect(url_for('predict', filename=filename))
     return render_template('index.html')
+
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory('uploads', filename)
 
 # Route for predicting
 @app.route('/predict/<filename>')
